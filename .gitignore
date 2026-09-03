@@ -1,0 +1,17 @@
+# Secrets
+.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Local data and databases
+data/raw/
+data/warehouse/
+*.duckdb
+
+# Editor and operating-system files
+.vscode/
+.DS_Store
+Thumbs.db
