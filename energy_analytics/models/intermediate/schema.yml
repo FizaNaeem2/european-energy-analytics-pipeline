@@ -1,0 +1,80 @@
+version: 2
+
+models:
+  - name: int_generation_monthly
+    description: Monthly electricity generation summarized by country.
+
+    columns:
+      - name: country_name
+        data_tests:
+          - not_null
+
+      - name: country_code
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['ITA', 'DEU', 'FRA', 'ESP', 'NLD']
+
+      - name: month
+        data_tests:
+          - not_null
+
+      - name: renewable_generation_twh
+        data_tests:
+          - not_null
+
+      - name: fossil_generation_twh
+        data_tests:
+          - not_null
+
+      - name: nuclear_generation_twh
+        data_tests:
+          - not_null
+
+      - name: net_imports_twh
+        data_tests:
+          - not_null
+
+      - name: domestic_generation_twh
+        data_tests:
+          - not_null
+
+      - name: electricity_supply_twh
+        data_tests:
+          - not_null
+
+  - name: int_emissions_monthly
+    description: Monthly power-sector emissions summarized by country.
+
+    columns:
+      - name: country_name
+        data_tests:
+          - not_null
+
+      - name: country_code
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['ITA', 'DEU', 'FRA', 'ESP', 'NLD']
+
+      - name: month
+        data_tests:
+          - not_null
+
+      - name: renewable_emissions_mtco2
+        data_tests:
+          - not_null
+
+      - name: fossil_emissions_mtco2
+        data_tests:
+          - not_null
+
+      - name: nuclear_emissions_mtco2
+        data_tests:
+          - not_null
+
+      - name: total_emissions_mtco2
+        data_tests:
+          - not_null

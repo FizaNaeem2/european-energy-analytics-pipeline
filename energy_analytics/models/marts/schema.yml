@@ -1,0 +1,81 @@
+version: 2
+
+models:
+  - name: fct_country_monthly_energy
+    description: >
+      Business-ready monthly energy table containing generation,
+      demand, emissions, carbon intensity and calculated KPIs.
+      Its grain is one row per country and month.
+
+    columns:
+      - name: country_name
+        data_tests:
+          - not_null
+
+      - name: country_code
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['ITA', 'DEU', 'FRA', 'ESP', 'NLD']
+
+      - name: month
+        data_tests:
+          - not_null
+
+      - name: demand_twh
+        data_tests:
+          - not_null
+
+      - name: renewable_generation_twh
+        data_tests:
+          - not_null
+
+      - name: fossil_generation_twh
+        data_tests:
+          - not_null
+
+      - name: nuclear_generation_twh
+        data_tests:
+          - not_null
+
+      - name: net_imports_twh
+        data_tests:
+          - not_null
+
+      - name: domestic_generation_twh
+        data_tests:
+          - not_null
+
+      - name: electricity_supply_twh
+        data_tests:
+          - not_null
+
+      - name: total_emissions_mtco2
+        description: >
+          May be null when Ember has not published an emissions
+          record, currently Italy for July 2026.
+
+      - name: carbon_intensity_gco2_per_kwh
+        data_tests:
+          - not_null
+
+      - name: renewable_share_pct
+        data_tests:
+          - not_null
+
+      - name: fossil_share_pct
+        data_tests:
+          - not_null
+
+      - name: nuclear_share_pct
+        data_tests:
+          - not_null
+
+      - name: net_import_dependence_pct
+        data_tests:
+          - not_null
+
+      - name: supply_demand_gap_twh
+        data_tests:
+          - not_null
