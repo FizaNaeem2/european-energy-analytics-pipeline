@@ -15,3 +15,9 @@ data/warehouse/
 .vscode/
 .DS_Store
 Thumbs.db
+# dbt generated files
+logs/
+**/logs/
+**/target/
+**/dbt_packages/
+*.duckdb

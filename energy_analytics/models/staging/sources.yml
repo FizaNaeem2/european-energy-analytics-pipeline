@@ -1,0 +1,19 @@
+version: 2
+
+sources:
+  - name: raw
+    description: Raw monthly energy data extracted from the Ember Energy API.
+    schema: main
+
+    tables:
+      - name: raw_electricity_generation
+        description: Monthly electricity generation by country and fuel source.
+
+      - name: raw_electricity_demand
+        description: Monthly electricity demand by country.
+
+      - name: raw_power_sector_emissions
+        description: Monthly power-sector emissions by country and fuel source.
+
+      - name: raw_carbon_intensity
+        description: Monthly electricity carbon intensity by country.

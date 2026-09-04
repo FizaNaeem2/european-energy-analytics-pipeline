@@ -1,0 +1,86 @@
+version: 2
+
+models:
+  - name: stg_electricity_demand
+    columns:
+      - name: country_code
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["ITA", "DEU", "FRA", "ESP", "NLD"]
+
+      - name: month
+        data_tests:
+          - not_null
+
+      - name: demand_twh
+        data_tests:
+          - not_null
+
+  - name: stg_electricity_generation
+    columns:
+      - name: country_code
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["ITA", "DEU", "FRA", "ESP", "NLD"]
+
+      - name: month
+        data_tests:
+          - not_null
+
+      - name: energy_source
+        data_tests:
+          - not_null
+
+      - name: generation_twh
+        data_tests:
+          - not_null
+
+      - name: share_of_generation_pct
+        data_tests:
+          - not_null
+
+  - name: stg_power_sector_emissions
+    columns:
+      - name: country_code
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["ITA", "DEU", "FRA", "ESP", "NLD"]
+
+      - name: month
+        data_tests:
+          - not_null
+
+      - name: energy_source
+        data_tests:
+          - not_null
+
+      - name: emissions_mtco2
+        data_tests:
+          - not_null
+
+      - name: share_of_emissions_pct
+        data_tests:
+          - not_null
+
+  - name: stg_carbon_intensity
+    columns:
+      - name: country_code
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["ITA", "DEU", "FRA", "ESP", "NLD"]
+
+      - name: month
+        data_tests:
+          - not_null
+
+      - name: carbon_intensity_gco2_per_kwh
+        data_tests:
+          - not_null
