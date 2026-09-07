@@ -79,3 +79,130 @@ models:
       - name: supply_demand_gap_twh
         data_tests:
           - not_null
+
+
+  - name: dim_country
+    description: >
+      Country dimension containing one row for each country
+      included in the European energy analysis.
+
+    columns:
+      - name: country_code
+        description: Three-letter country code used as the dimension key.
+        data_tests:
+          - not_null
+          - unique
+          - accepted_values:
+              arguments:
+                values: ['ITA', 'DEU', 'FRA', 'ESP', 'NLD']
+
+      - name: country_name
+        data_tests:
+          - not_null
+          - unique
+
+
+  - name: dim_month
+    description: >
+      Monthly calendar dimension used to filter and organize
+      the country-month energy and forecasting fact tables.
+
+    columns:
+      - name: month_key
+        description: Numeric year-month key in YYYYMM format.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: month_start
+        description: First calendar day of the represented month.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: calendar_year
+        data_tests:
+          - not_null
+
+      - name: calendar_month_number
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                quote: false
+
+      - name: calendar_quarter
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Q1', 'Q2', 'Q3', 'Q4']
+
+      - name: month_name
+        data_tests:
+          - not_null
+
+      - name: year_month
+        data_tests:
+          - not_null
+          - unique
+
+
+  - name: fct_carbon_intensity_forecast
+    description: >
+      Monthly actual carbon intensity and one-month-ahead
+      persistence forecasts. Its grain is one row per country
+      and forecast month.
+
+    columns:
+      - name: country_code
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_country')
+                field: country_code
+
+      - name: month
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_month')
+                field: month_start
+
+      - name: actual_carbon_intensity_gco2_per_kwh
+        data_tests:
+          - not_null
+
+      - name: predicted_carbon_intensity_gco2_per_kwh
+        data_tests:
+          - not_null
+
+      - name: forecast_error_gco2_per_kwh
+        description: Actual carbon intensity minus the forecast.
+        data_tests:
+          - not_null
+
+      - name: absolute_error_gco2_per_kwh
+        data_tests:
+          - not_null
+
+      - name: squared_error
+        data_tests:
+          - not_null
+
+      - name: evaluation_split
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Training history', 'Validation', 'Final test']
+
+      - name: forecast_method
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Previous-month persistence']

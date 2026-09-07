@@ -21,3 +21,6 @@ logs/
 **/target/
 **/dbt_packages/
 *.duckdb
+
+# Generated Power BI exports
+data/power_bi/
