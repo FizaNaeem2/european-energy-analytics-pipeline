@@ -1,0 +1,9 @@
+energy_analytics:
+  target: airflow
+
+  outputs:
+    airflow:
+      type: duckdb
+      path: /opt/airflow/project/data/warehouse/energy_analytics.duckdb
+      schema: main
+      threads: 1

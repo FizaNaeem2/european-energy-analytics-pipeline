@@ -24,3 +24,8 @@ logs/
 
 # Generated Power BI exports
 data/power_bi/
+# Airflow generated configuration
+config/airflow.cfg
+
+# dbt local user settings
+config/dbt/.user.yml
