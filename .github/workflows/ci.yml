@@ -50,7 +50,15 @@ jobs:
           ENV_FILE_PATH: /dev/null
           FERNET_KEY: ci-placeholder
         run: docker compose config --quiet
+      - name: Build Airflow image
+        run: docker build --tag energy-analytics-airflow-ci .
 
+      - name: Validate Airflow DAG import
+        run: >
+          docker run --rm
+          --volume "${GITHUB_WORKSPACE}/dags:/opt/airflow/dags:ro"
+          energy-analytics-airflow-ci
+          python -c "from airflow.dag_processing.dagbag import DagBag; bag = DagBag('/opt/airflow/dags', include_examples=False); print({'dag_ids': bag.dag_ids, 'import_errors': bag.import_errors}); assert not bag.import_errors, bag.import_errors; assert 'european_energy_analytics_pipeline' in bag.dag_ids, bag.dag_ids"
       - name: Ingest Ember data
         run: python -u src/ingest_ember.py
 
