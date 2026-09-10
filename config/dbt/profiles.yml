@@ -4,6 +4,6 @@ energy_analytics:
   outputs:
     airflow:
       type: duckdb
-      path: /opt/airflow/project/data/warehouse/energy_analytics.duckdb
+      path: "{{ env_var('ENERGY_ANALYTICS_DB_PATH', '/opt/airflow/project/data/warehouse/energy_analytics.duckdb') }}"
       schema: main
       threads: 1

@@ -1,0 +1,70 @@
+name: Energy Analytics CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: energy-analytics-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-pipeline:
+    name: Test complete data pipeline
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    env:
+      EMBER_API_KEY: ${{ secrets.EMBER_API_KEY }}
+      ENERGY_ANALYTICS_DB_PATH: ${{ github.workspace }}/data/warehouse/energy_analytics.duckdb
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Check Python syntax
+        run: python -m compileall -q src dags
+
+      - name: Validate Docker Compose
+        env:
+          ENV_FILE_PATH: /dev/null
+          FERNET_KEY: ci-placeholder
+        run: docker compose config --quiet
+
+      - name: Ingest Ember data
+        run: python -u src/ingest_ember.py
+
+      - name: Load data into DuckDB
+        run: python -u src/load_duckdb.py
+
+      - name: Validate raw data
+        run: python -u src/validate_data.py
+
+      - name: Build and test dbt models
+        run: >
+          dbt build
+          --project-dir energy_analytics
+          --profiles-dir config/dbt
+
+      - name: Export Power BI data
+        run: python -u src/export_power_bi.py
