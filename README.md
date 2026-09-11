@@ -1,7 +1,7 @@
 # European Energy Analytics Pipeline
 
-[![Energy Analytics CI](https://github.com/FizaNaeem2/european-energy-analytics-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/FizaNaeem2/european-energy-analytics-pipeline/actions/workflows/ci.yml)
-[![Publish Airflow Image](https://github.com/FizaNaeem2/european-energy-analytics-pipeline/actions/workflows/cd.yml/badge.svg)](https://github.com/FizaNaeem2/european-energy-analytics-pipeline/actions/workflows/cd.yml)
+[![Energy Analytics CI](https://github.com/Fizanaeem-DS/european-energy-analytics-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/Fizanaeem-DS/european-energy-analytics-pipeline/actions/workflows/ci.yml)
+[![Publish Airflow Image](https://github.com/Fizanaeem-DS/european-energy-analytics-pipeline/actions/workflows/cd.yml/badge.svg)](https://github.com/Fizanaeem-DS/european-energy-analytics-pipeline/actions/workflows/cd.yml)
 
 **A production-style data engineering and analytics project that turns monthly Ember electricity data into tested warehouse models, a three-page Power BI report, and cloud-ready analytical outputs.**
 
@@ -106,7 +106,7 @@ A manual run of ECS task definition `energy-analytics-pipeline:1` validated that
 | Observability | Complete task output captured in CloudWatch Logs |
 | Secret handling | Ember API key injected from AWS Systems Manager Parameter Store |
 
-The validated task definition is versioned at [`infra/ecs-task-definition.json`](infra/ecs-task-definition.json) and was introduced in commit [`82c1af6`](https://github.com/FizaNaeem2/european-energy-analytics-pipeline/commit/82c1af63a0b1d66af4a31347218e2ac58a0453f5).
+The validated task definition is versioned at [`infra/ecs-task-definition.json`](infra/ecs-task-definition.json) and was introduced in commit [`82c1af6`](https://github.com/Fizanaeem-DS/european-energy-analytics-pipeline/commit/82c1af63a0b1d66af4a31347218e2ac58a0453f5).
 
 ## CI/CD
 
