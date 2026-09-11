@@ -9,9 +9,19 @@ The project ingests monthly data from the Ember Energy API, validates and loads 
 
 ## Power BI dashboard
 
-![Power BI executive overview](docs/images/power-bi-dashboard.png)
+The interactive Power BI report contains three pages with country and year filters, energy-transition metrics, generation-mix analysis, and forecast-quality views.
 
-The interactive Power BI report contains three pages: **Executive Overview**, **Energy Transition**, and **Forecast Performance**. It combines country and year filters with demand, generation, emissions, carbon-intensity, generation-mix, and forecast-quality views.
+### Executive Overview
+
+![Power BI Executive Overview dashboard](docs/images/power-bi-dashboard.png)
+
+### Energy Transition
+
+![Power BI Energy Transition dashboard](docs/images/power-bi-energy-transition.png)
+
+### Forecast Performance
+
+![Power BI Forecast Performance dashboard](docs/images/power-bi-forecast-performance.png)
 
 ## Countries and coverage
 
