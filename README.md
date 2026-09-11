@@ -7,6 +7,12 @@ An end-to-end data engineering and analytics pipeline for comparing electricity 
 
 The project ingests monthly data from the Ember Energy API, validates and loads it into DuckDB, transforms it with dbt, prepares analytical outputs for Power BI, packages the workflow with Docker and Airflow, and demonstrates a production-style deployment on AWS ECS Fargate.
 
+## Power BI dashboard
+
+![Power BI executive overview](docs/images/power-bi-dashboard.png)
+
+The interactive Power BI report contains three pages: **Executive Overview**, **Energy Transition**, and **Forecast Performance**. It combines country and year filters with demand, generation, emissions, carbon-intensity, generation-mix, and forecast-quality views.
+
 ## Countries and coverage
 
 - Italy (`ITA`)
