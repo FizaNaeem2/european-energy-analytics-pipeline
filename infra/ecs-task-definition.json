@@ -1,0 +1,57 @@
+{
+  "family": "energy-analytics-pipeline",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "cpu": "1024",
+  "memory": "3072",
+  "runtimePlatform": {
+    "cpuArchitecture": "X86_64",
+    "operatingSystemFamily": "LINUX"
+  },
+  "executionRoleArn": "arn:aws:iam::292743064066:role/EnergyAnalyticsECSTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::292743064066:role/EnergyAnalyticsECSTaskRole",
+  "containerDefinitions": [
+    {
+      "name": "energy-analytics",
+      "image": "292743064066.dkr.ecr.eu-central-1.amazonaws.com/european-energy-analytics-pipeline-airflow:latest",
+      "essential": true,
+      "entryPoint": [
+        "bash",
+        "-lc"
+      ],
+      "command": [
+        "python -u src/ingest_ember.py && python -u src/load_duckdb.py && python -u src/validate_data.py && dbt build --project-dir energy_analytics --profiles-dir config/dbt && python -u src/export_power_bi.py && python -u src/upload_to_s3.py"
+      ],
+      "environment": [
+        {
+          "name": "S3_BUCKET",
+          "value": "fiza-european-energy-analytics-20260910"
+        },
+        {
+          "name": "AWS_REGION",
+          "value": "eu-central-1"
+        },
+        {
+          "name": "S3_PREFIX",
+          "value": "energy-analytics"
+        }
+      ],
+      "secrets": [
+        {
+          "name": "EMBER_API_KEY",
+          "valueFrom": "arn:aws:ssm:eu-central-1:292743064066:parameter/energy-analytics/ember-api-key"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/energy-analytics-pipeline",
+          "awslogs-region": "eu-central-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
