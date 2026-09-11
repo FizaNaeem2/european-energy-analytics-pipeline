@@ -68,11 +68,21 @@ with DAG(
             "python -u src/export_power_bi.py"
         ),
     )
-
+    upload_outputs_to_s3 = BashOperator(
+    task_id="upload_outputs_to_s3",
+    bash_command=(
+        f"cd {PROJECT_ROOT} && "
+        'if [ -n "$S3_BUCKET" ]; then '
+        "python -u src/upload_to_s3.py; "
+        'else echo "S3_BUCKET is not set; skipping S3 upload."; '
+        "fi"
+    ),
+)
     (
         ingest_ember_data
         >> load_duckdb
         >> validate_raw_data
         >> build_dbt_models
         >> export_power_bi_data
+        >> upload_outputs_to_s3
     )
