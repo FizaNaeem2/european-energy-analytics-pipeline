@@ -169,11 +169,11 @@ Power BI receives:
 
 ### Container publishing
 
-After successful CI on `main`, the active [`.github/workflows/cd.yml`](.github/workflows/cd.yml):
+The active [`.github/workflows/cd.yml`](.github/workflows/cd.yml) is deliberately manual-only. When explicitly started, it:
 
 - builds the self-contained Airflow image;
 - publishes `latest` and commit-SHA tags to GHCR using the repository's `GITHUB_TOKEN`;
-- keeps ongoing container publishing on GitHub's public-repository infrastructure.
+- performs no automatic registry writes after ordinary commits.
 
 For the completed AWS deployment checkpoint, an earlier revision of this workflow used GitHub OIDC to obtain short-lived AWS credentials and publish the same image to Amazon ECR without storing permanent AWS access keys.
 
@@ -214,7 +214,7 @@ The successful manual run proves the deployment while avoiding an always-on serv
 
 Automatic AWS scheduling is intentionally disabled. No ECS service or EventBridge schedule is required for this portfolio demonstration, and the Fargate task runs only when started manually.
 
-After the successful AWS validation, active image publishing was switched to GHCR-only so future commits do not refresh Amazon ECR. Chargeable demonstration storage can now be removed from ECR, S3, and CloudWatch while the reusable source code, task definition, CI/CD workflow, and verified deployment results remain documented in GitHub.
+After the successful AWS validation, ECR publishing was removed and the remaining GHCR workflow was made manual-only, so future commits do not automatically publish container images. Chargeable demonstration storage can now be removed from ECR, S3, and CloudWatch while the reusable source code, task definition, CI/CD workflow, and verified deployment results remain documented in GitHub.
 
 ## Security
 
@@ -230,4 +230,4 @@ After the successful AWS validation, active image publishing was switched to GHC
 
 **Complete portfolio implementation.**
 
-The pipeline has been tested locally, validated by GitHub Actions, packaged as a self-contained Airflow image, published to GHCR, and successfully executed through an OIDC-authenticated Amazon ECR/ECS Fargate deployment with verified S3 outputs. Recurring AWS scheduling was deliberately excluded, and active publishing is GHCR-only, to prevent unnecessary ongoing AWS usage.
+The pipeline has been tested locally, validated by GitHub Actions, packaged as a self-contained Airflow image, published to GHCR, and successfully executed through an OIDC-authenticated Amazon ECR/ECS Fargate deployment with verified S3 outputs. Recurring AWS scheduling was deliberately excluded, ECR publishing was removed, and GHCR publishing is manual-only to prevent unnecessary ongoing cloud usage.
